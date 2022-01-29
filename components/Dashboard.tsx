@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useAuth from "../store/useAuth";
 import { useState } from "react";
 import { TextField } from "@material-ui/core";
-import classes from "./Dashboard.module.css";
+// import classes from "./Dashboard.module.css";
 import SpotifyWebApi from "spotify-web-api-node";
 
 const spotifyApi = new SpotifyWebApi({
@@ -28,7 +28,7 @@ const Dashboard = ({ code }) => {
     });
   }, [search, accessToken]);
 
-  return <div className={classes.container}></div>;
+  return <div></div>;
 };
 
 export default Dashboard;

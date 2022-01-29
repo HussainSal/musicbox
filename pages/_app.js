@@ -1,12 +1,18 @@
 import "../styles/globals.css";
 import { ThemeProvider } from "@material-ui/core";
 import theme from "../theme";
+import Layout from "../components/partials/Layout";
+import { Appwrapper } from "../store/authContext";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <Appwrapper>
+      <ThemeProvider theme={theme}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
+    </Appwrapper>
   );
 }
 

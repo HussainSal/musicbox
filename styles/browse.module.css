@@ -1,0 +1,22 @@
+.browseSection {
+  padding-top: 150px;
+}
+
+.browseContainer {
+  max-width: 1480px;
+  margin: auto;
+}
+
+.browse {
+  margin-bottom: 100px;
+}
+
+.songCategory {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.genre {
+  cursor: pointer;
+}

@@ -1,0 +1,182 @@
+.navigation {
+  position: fixed;
+  backdrop-filter: blur(30px);
+  width: 100%;
+  z-index: 100;
+  /* background-color: black; */
+}
+
+.innernavigation {
+  margin: auto;
+  max-width: 1400px;
+  height: 85px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.options {
+  width: 466px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.linkBox {
+  display: flex;
+  width: 160px;
+  justify-content: space-between;
+}
+
+.buttonBox {
+  display: flex;
+  width: 245px;
+  justify-content: space-between;
+}
+
+/*Footer */
+
+.footer {
+  background-color: black;
+  padding-top: 80px;
+}
+
+.innerFotterContainer {
+  max-width: 1400px;
+  height: 365px;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+}
+
+.footerOptions_box {
+  width: 826px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footerOptions {
+  width: 552px;
+  height: 173px;
+  display: flex;
+  justify-content: center;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.optionItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.logoBox {
+  display: flex;
+  flex-direction: column;
+  height: 271px;
+  justify-content: space-between;
+}
+
+.legalBox {
+  display: flex;
+  width: 270px;
+  justify-content: space-between;
+}
+
+.socialmediaBox {
+  display: flex;
+  height: 300px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.variousSocialApp {
+  width: 184px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* LOGGEIN IN NAVIGATION */
+.options_logedin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 420px;
+  height: 36px;
+}
+
+.innernavigation_logedin {
+  max-width: 1790px;
+}
+
+.buttonGradient {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 112px;
+  height: 40px;
+  border-radius: 20px;
+  background: linear-gradient(to right, #35edfb -8%, #2d9bef 60%, #9b2def 105%);
+}
+
+.navcolor {
+  background-color: #161a1a;
+}
+
+.browseCategories {
+  width: 395px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.searchBox {
+  width: 350px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.browseCategoriesText {
+  line-height: 52px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.input {
+  width: 200px;
+  height: 40px;
+  border-radius: 80px;
+  background-color: #898b91;
+  padding-left: 40px;
+  border: none;
+  outline: none;
+}
+
+.input:focus {
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 52px;
+}
+
+.input::-webkit-input-placeholder {
+  color: white;
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 52px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 10px;
+  top: 8px;
+}

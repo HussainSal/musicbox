@@ -1,0 +1,85 @@
+.header {
+  background-image: url(../assets/images/backgroundLandingpage.png);
+  background-size: cover;
+  background-position: 100%;
+  height: 1000px;
+  width: 100%;
+}
+
+.header_container {
+  padding-top: 306px;
+  margin: auto;
+  width: 574px;
+  height: 396px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttonGroup {
+  margin-top: 100px;
+  margin-bottom: 21px;
+  width: 480px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pricebox {
+  width: 230px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.skyblue_text {
+  color: #2dceef;
+  font-weight: bold;
+}
+
+/*FLOW */
+
+.flow_section {
+  background-color: #161a1a;
+}
+
+.flow_container {
+  max-width: 1400px;
+  display: flex;
+  height: 100vh;
+  margin: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flow_imagebox {
+  width: 709px;
+  height: 716px;
+}
+
+.flow_textbox {
+  width: 535px;
+  height: 90px;
+}
+
+.flow_heading {
+  display: flex;
+  margin-bottom: 36px;
+  align-items: center;
+}
+
+.listenanytime_container {
+  height: 640px;
+  background-image: url(../assets/images/listenanytime.png);
+  background-size: cover;
+  background-position: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.listenanytime_textbox {
+  width: 424px;
+  margin-left: 260px;
+}
+
+.findmusic_textbox {
+  width: 470px;
+}

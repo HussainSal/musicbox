@@ -2,22 +2,23 @@ import { createTheme } from "@material-ui/core";
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Josefin Sans ",
+    fontFamily: "Lato",
     h1: {
-      fontSize: "53px",
-      lineHeight: "81.98px",
-      letterSpacing: ".015em",
-      fontWeight: "600",
+      fontSize: "50px",
+      lineHeight: "32px",
+      letterSpacing: "-30",
+      fontWeight: "bold",
     },
     h2: {
-      fontSize: "42px",
-      lineHeight: "49.22px",
-      letterSpacing: ".015em",
+      fontSize: "48px",
+      lineHeight: "64px",
+      letterSpacing: "20",
+      fontWeight: "bold",
     },
     h3: {
-      fontSize: "35px",
-      lineHeight: "46.2px",
-      letterSpacing: ".015em",
+      fontSize: "36px",
+      lineHeight: "34px",
+      letterSpacing: ".10px",
     },
     h4: {
       fontSize: "34px",
@@ -26,35 +27,40 @@ const theme = createTheme({
     },
     h5: {
       fontSize: "26px",
-      fontWeight: "600",
+      fontWeight: "bold",
       lineHeight: "26px",
     },
     subtitle1: {
-      fontSize: "16px",
-      fontFamily: "lato",
-      lineHeight: "20px",
+      fontSize: "20px",
+      fontWeight: "normal",
+      lineHeight: "35px",
+      letterSpacing: ".16px",
     },
     subtitle2: {
-      fontSize: "22px",
-      lineHeight: "25.78px",
+      fontSize: "14px",
+      fontWeight: "normal",
+      lineHeight: "17px",
+      // letterSpacing: "10",
     },
     body1: {
       fontSize: "18px",
-      fontFamily: "lato",
-      fontWeight: "400",
-      lineHeight: "21.6px",
+      fontWeight: "bold",
+      lineHeight: "32px",
+      // letterSpacing: ".6px",
     },
     body2: {
       fontSize: "16px",
-      lineHeight: "18.75px",
+      fontWeight: "bold",
+      lineHeight: "32px",
+      letterSpacing: ".6px",
     },
   },
   palette: {
     primary: {
-      main: "#FB2E86",
+      main: "#FFF",
     },
     secondary: {
-      main: "#151875",
+      main: "#848484",
     },
   },
 });
