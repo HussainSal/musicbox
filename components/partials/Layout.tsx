@@ -14,6 +14,9 @@ import Twitter from "../../assets/icons/Twitter";
 import { useAppContext } from "../../store/authContext";
 import { useRouter } from "next/dist/client/router";
 import Search from "../../assets/icons/Search";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const AUTH_URL =
   "https://accounts.spotify.com/authorize?client_id=c1af256ebd144ae18d2cdd24146ef6fc&response_type=code&redirect_uri=http://localhost:3000&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state";
@@ -51,17 +54,26 @@ const useStyle = makeStyles({
     },
   },
   browseCategoriesText: {
-    color: "#99999F",
+    color: "#FFF",
   },
 });
 
 const Layout = ({ children }) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const router = useRouter();
 
   const ctx = useAppContext();
   const style = useStyle();
   useEffect(() => {
-    !ctx.login ? "" : router.push("/home");
+    !ctx.login ? router.push("/") : router.push("/home");
   }, [ctx.login]);
 
   return (
@@ -132,33 +144,80 @@ const Layout = ({ children }) => {
                 </Nextlink>
               </div>
             </div>
-            <div className={classes.browseCategories}>
-              <Typography
-                variant="body1"
-                className={classes.browseCategoriesText}
-              >
-                Generes & Moods
-              </Typography>
-              <Typography
-                variant="body1"
-                className={`${classes.browseCategoriesText} ${style.browseCategoriesText} `}
-              >
-                New Releases
-              </Typography>
-              <Typography
-                variant="body1"
-                className={`${classes.browseCategoriesText} ${style.browseCategoriesText} `}
-              >
-                Podcast
-              </Typography>
-            </div>
+            {router.pathname.includes("/browse") && (
+              <div className={classes.browseCategories}>
+                <Nextlink href={"/browse"}>
+                  <Typography
+                    variant="body1"
+                    className={`${classes.browseCategoriesText}   ${
+                      router.pathname == "/browse" && style.browseCategoriesText
+                    } `}
+                  >
+                    Generes & Moods
+                  </Typography>
+                </Nextlink>
+                <Nextlink href={"/browse/newreleases"}>
+                  <Typography
+                    variant="body1"
+                    className={`${classes.browseCategoriesText} ${
+                      router.pathname == "/browse/newreleases" &&
+                      style.browseCategoriesText
+                    } `}
+                  >
+                    New Releases
+                  </Typography>
+                </Nextlink>
+                <Nextlink href={"/browse/podcast"}>
+                  <Typography
+                    variant="body1"
+                    className={`${classes.browseCategoriesText} ${
+                      router.pathname == "/browse/podcast" &&
+                      style.browseCategoriesText
+                    } `}
+                  >
+                    Podcast
+                  </Typography>
+                </Nextlink>
+              </div>
+            )}
             <div className={classes.searchBox}>
               <div className={classes.searchIcon}>
                 <Search />
               </div>
               <input className={classes.input} placeholder="Search"></input>
               <div className={classes.accountholder}>
-                <Typography>John Doe</Typography>
+                <AccountCircleOutlinedIcon />
+                <div>
+                  <Button
+                    id="basic-button"
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClick}
+                    color="primary"
+                  >
+                    John Doe
+                  </Button>
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                  >
+                    <MenuItem onClick={handleClose}>My account</MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleClose;
+                        ctx.setLogin(false);
+                      }}
+                    >
+                      Logout
+                    </MenuItem>
+                  </Menu>
+                </div>
               </div>
             </div>
           </div>

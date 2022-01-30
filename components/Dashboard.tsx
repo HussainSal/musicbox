@@ -13,6 +13,7 @@ const Dashboard = ({ code }) => {
   const accessToken = useAuth(code);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  console.log(searchResults);
 
   useEffect(() => {
     if (!accessToken) return;
@@ -24,7 +25,24 @@ const Dashboard = ({ code }) => {
     if (!accessToken) return;
 
     spotifyApi.searchTracks(search).then((res) => {
-      console.log(res.body);
+      setSearchResults(
+        res.body.tracks.items.map((track) => {
+          const smallestAlbumImage = track.album.images.reduce(
+            (smallest, image) => {
+              if (image.height < smallest.height) return image;
+              return smallest;
+            },
+            track.album.images[0]
+          );
+
+          return {
+            artist: track.artists[0].name,
+            title: track.name,
+            uri: track.uri,
+            albumUrl: smallestAlbumImage.url,
+          };
+        })
+      );
     });
   }, [search, accessToken]);
 

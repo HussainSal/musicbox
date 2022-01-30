@@ -147,6 +147,7 @@
   line-height: 52px;
   font-weight: normal;
   cursor: pointer;
+  color: #99999f;
 }
 
 .input {
@@ -179,4 +180,11 @@
   position: absolute;
   left: 10px;
   top: 8px;
+}
+
+.accountholder {
+  display: flex;
+  width: 121px;
+  justify-content: space-between;
+  align-items: center;
 }

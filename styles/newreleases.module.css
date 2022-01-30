@@ -1,0 +1,23 @@
+.newreleaseSection {
+  padding-top: 150px;
+}
+
+.newreleaseContainer {
+  max-width: 1480px;
+  margin: auto;
+}
+
+.newreleasedContainer {
+  margin-bottom: 100px;
+}
+
+.songCategory {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.genre {
+  cursor: pointer;
+}

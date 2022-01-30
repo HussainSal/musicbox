@@ -1,0 +1,23 @@
+.podcastSection {
+  padding-top: 150px;
+}
+
+.podcastContainer {
+  max-width: 1480px;
+  margin: auto;
+}
+
+.podcast {
+  margin-bottom: 100px;
+}
+
+.songCategory {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.genre {
+  cursor: pointer;
+}

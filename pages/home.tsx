@@ -5,7 +5,7 @@ import recentlyplayed1 from "../assets/images/recentlyplayed1.png";
 import Image from "next/dist/client/image";
 import { makeStyles } from "@material-ui/core";
 import { genre } from "../assets/data/genre";
-import { podcast } from "../assets/data/podcast";
+import { podcastCategory } from "../assets/data/podcast";
 import { newreleases } from "../assets/data/newreleases";
 import { recommendations } from "../assets/data/recommendations";
 import Like from "../assets/icons/Likes";
@@ -54,7 +54,7 @@ const home = () => {
             Explore by categories and popularity
           </Typography>
           <div className={classes.songCategory}>
-            {podcast.map((cur) => {
+            {podcastCategory.map((cur) => {
               return (
                 <div className={classes.genre}>
                   <Image src={cur.image} width="225px" height="128px" alt="" />
