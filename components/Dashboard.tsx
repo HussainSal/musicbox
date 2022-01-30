@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
-import useAuth from "../store/useAuth";
-import { useState } from "react";
-import { TextField } from "@material-ui/core";
 // import classes from "./Dashboard.module.css";
-import SpotifyWebApi from "spotify-web-api-node";
+import React, { useEffect } from "react";
+import { TextField } from "@material-ui/core";
+import { useState } from "react";
 
+import useAuth from "../store/useAuth";
+import SpotifyWebApi from "spotify-web-api-node";
 const spotifyApi = new SpotifyWebApi({
   clientId: "c1af256ebd144ae18d2cdd24146ef6fc",
 });
+const hello = "hello";
 
 const Dashboard = ({ code }) => {
   const accessToken = useAuth(code);
