@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./Layout.module.css";
 import { Fragment } from "react";
 import Image from "next/dist/client/image";
@@ -17,6 +17,12 @@ import Search from "../../assets/icons/Search";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+
+import useAuth from "../../store/useAuth";
+import SpotifyWebApi from "spotify-web-api-node";
+const spotifyApi = new SpotifyWebApi({
+  clientId: "c1af256ebd144ae18d2cdd24146ef6fc",
+});
 
 const AUTH_URL =
   "https://accounts.spotify.com/authorize?client_id=c1af256ebd144ae18d2cdd24146ef6fc&response_type=code&redirect_uri=http://localhost:3000&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state";
@@ -58,7 +64,7 @@ const useStyle = makeStyles({
   },
 });
 
-const Layout = ({ children }) => {
+const Layout = ({ children, code }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,8 +79,45 @@ const Layout = ({ children }) => {
   const ctx = useAppContext();
   const style = useStyle();
   useEffect(() => {
-    !ctx.login ? router.push("/") : router.push("/home");
+    !ctx.login ? "" : router.push("/home");
   }, [ctx.login]);
+
+  const accessToken = useAuth(code);
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    if (!accessToken) return;
+    spotifyApi.setAccessToken(accessToken);
+  }, [accessToken]);
+
+  useEffect(() => {
+    if (!search) return setSearchResults([]);
+    if (!accessToken) return;
+
+    spotifyApi.searchTracks(search).then((res) => {
+      setSearchResults(
+        res.body.tracks.items.map((track) => {
+          const smallestAlbumImage = track.album.images.reduce(
+            (smallest, image) => {
+              if (image.height < smallest.height) return image;
+              return smallest;
+            },
+            track.album.images[0]
+          );
+
+          return {
+            artist: track.artists[0].name,
+            title: track.name,
+            uri: track.uri,
+            albumUrl: smallestAlbumImage.url,
+          };
+        })
+      );
+    });
+  }, [search, accessToken]);
+
+  console.log(searchResults);
 
   return (
     <Fragment>
@@ -98,6 +141,7 @@ const Layout = ({ children }) => {
                   onClick={() => ctx.setLogin(true)}
                   variant="outlined"
                   className={style.loginButton}
+                  href={AUTH_URL}
                 >
                   Log in
                 </Button>
@@ -184,7 +228,13 @@ const Layout = ({ children }) => {
               <div className={classes.searchIcon}>
                 <Search />
               </div>
-              <input className={classes.input} placeholder="Search"></input>
+              <input
+                className={classes.input}
+                placeholder="Search"
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              ></input>
               <div className={classes.accountholder}>
                 <AccountCircleOutlinedIcon />
                 <div>

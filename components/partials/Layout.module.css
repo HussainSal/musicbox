@@ -188,3 +188,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.loginButtonBox {
+  padding: 100px;
+}

@@ -14,6 +14,7 @@ const useAuth = (code) => {
         code,
       })
       .then((res) => {
+        console.log(res.data);
         setAccessToken(res.data.accessToken);
         setRefreshToken(res.data.refreshToken);
         setExpiresIn(res.data.expiresIn);
@@ -21,7 +22,6 @@ const useAuth = (code) => {
       })
       .catch((err) => {
         console.log(err);
-        // window.location = "/";
       });
   }, [code]);
 
@@ -43,7 +43,7 @@ const useAuth = (code) => {
         });
     }, (expiresIn - 60) * 1000);
 
-    return () => clearTimeout(interval);
+    return () => clearInterval(interval);
   }, [refreshToken, expiresIn]);
 
   return accessToken;

@@ -1,4 +1,5 @@
 import React from "react";
+import classes from "./partials/Layout.module.css";
 import { Button } from "@material-ui/core";
 
 const AUTH_URL =
@@ -6,7 +7,7 @@ const AUTH_URL =
 
 const Login = () => {
   return (
-    <div>
+    <div className={classes.loginButtonBox}>
       <Button href={AUTH_URL}>login</Button>
     </div>
   );

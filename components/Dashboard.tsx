@@ -8,10 +8,12 @@ import SpotifyWebApi from "spotify-web-api-node";
 const spotifyApi = new SpotifyWebApi({
   clientId: "c1af256ebd144ae18d2cdd24146ef6fc",
 });
-const hello = "hello";
+import { useAppContext } from "../store/authContext";
+import classes from "./partials/Layout.module.css";
 
-const Dashboard = ({ code }) => {
-  const accessToken = useAuth(code);
+const Dashboard = () => {
+  const ctx = useAppContext();
+  const accessToken = useAuth(ctx.code);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   console.log(searchResults);
@@ -26,6 +28,7 @@ const Dashboard = ({ code }) => {
     if (!accessToken) return;
 
     spotifyApi.searchTracks(search).then((res) => {
+      console.log(res.body.tracks);
       setSearchResults(
         res.body.tracks.items.map((track) => {
           const smallestAlbumImage = track.album.images.reduce(
@@ -47,7 +50,17 @@ const Dashboard = ({ code }) => {
     });
   }, [search, accessToken]);
 
-  return <div></div>;
+  return (
+    <div className={classes.loginButtonBox}>
+      <input
+        className={classes.input}
+        placeholder="Search"
+        type="search"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      ></input>
+    </div>
+  );
 };
 
 export default Dashboard;
