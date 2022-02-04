@@ -9,6 +9,9 @@ import { podcastCategory } from "../assets/data/podcast";
 import { newreleases } from "../assets/data/newreleases";
 import { recommendations } from "../assets/data/recommendations";
 import Like from "../assets/icons/Likes";
+import { useAppContext } from "../store/authContext";
+import Player from "../components/Player";
+import useAuth from "../store/useAuth";
 
 const useStyle = makeStyles({
   browseText: {
@@ -24,115 +27,162 @@ const useStyle = makeStyles({
 });
 
 const home = () => {
+  const ctx = useAppContext();
   const style = useStyle();
+  const accessToken = useAuth(ctx.code);
+
+  console.log(accessToken);
+
   return (
     <section className={classes.homeSection}>
-      <div className={classes.homeContainer}>
-        <div className={classes.recentlyPlayed}>
-          <div className={classes.recentlyPlayedImage}>
-            <Image src={recentlyplayed1} alt="" />
+      {!ctx.data && (
+        <div className={classes.homeContainer}>
+          <div className={classes.recentlyPlayed}>
+            <div className={classes.recentlyPlayedImage}>
+              <Image src={recentlyplayed1} alt="" />
+            </div>
           </div>
-        </div>
-        <div className={classes.browse}>
-          <Typography className={style.browseText}>Browse</Typography>
-          <Typography variant="body2" className={style.browseSubText}>
-            Explore by genre and mood
-          </Typography>
-          <div className={classes.songCategory}>
-            {genre.map((cur) => {
-              return (
-                <div className={classes.genre}>
-                  <Image src={cur.image} width="225px" height="128px" alt="" />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className={classes.browse}>
-          <Typography className={style.browseText}>Podcast</Typography>
-          <Typography variant="body2" className={style.browseSubText}>
-            Explore by categories and popularity
-          </Typography>
-          <div className={classes.songCategory}>
-            {podcastCategory.map((cur) => {
-              return (
-                <div className={classes.genre}>
-                  <Image src={cur.image} width="225px" height="128px" alt="" />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className={classes.browse}>
-          <Typography className={style.browseText}>
-            New releases for you
-          </Typography>
-          <div className={classes.songCategory}>
-            {newreleases.map((cur) => {
-              return (
-                <div>
+          <div className={classes.browse}>
+            <Typography className={style.browseText}>Browse</Typography>
+            <Typography variant="body2" className={style.browseSubText}>
+              Explore by genre and mood
+            </Typography>
+            <div className={classes.songCategory}>
+              {genre.map((cur) => {
+                return (
                   <div className={classes.genre}>
                     <Image
                       src={cur.image}
                       width="225px"
-                      height="225px"
+                      height="128px"
                       alt=""
                     />
                   </div>
-                  <Typography variant="body2" className={style.browseSubText}>
-                    {cur.name}
-                  </Typography>
-                  <Typography
-                    variant="subtitle1"
-                    style={{ color: "#99999F", lineHeight: "8px" }}
-                    className={style.browseSubText}
-                  >
-                    {cur.artist}
-                  </Typography>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
-        <div className={classes.browse}>
-          <Typography className={style.browseText}>
-            You might like these artists
-          </Typography>
-          <div className={classes.songCategory}>
-            {recommendations.map((cur) => {
-              return (
-                <div className={classes.recommendationBox}>
+          <div className={classes.browse}>
+            <Typography className={style.browseText}>Podcast</Typography>
+            <Typography variant="body2" className={style.browseSubText}>
+              Explore by categories and popularity
+            </Typography>
+            <div className={classes.songCategory}>
+              {podcastCategory.map((cur) => {
+                return (
                   <div className={classes.genre}>
                     <Image
                       src={cur.image}
                       width="225px"
-                      height="225px"
+                      height="128px"
                       alt=""
                     />
                   </div>
-                  <Typography variant="body2" className={style.browseSubText}>
-                    {cur.name}
-                  </Typography>
-                  <div className={classes.likeBox}>
-                    <Like />
+                );
+              })}
+            </div>
+          </div>
+          <div className={classes.browse}>
+            <Typography className={style.browseText}>
+              New releases for you
+            </Typography>
+            <div className={classes.songCategory}>
+              {newreleases.map((cur) => {
+                return (
+                  <div>
+                    <div className={classes.genre}>
+                      <Image
+                        src={cur.image}
+                        width="225px"
+                        height="225px"
+                        alt=""
+                      />
+                    </div>
+                    <Typography variant="body2" className={style.browseSubText}>
+                      {cur.name}
+                    </Typography>
                     <Typography
                       variant="subtitle1"
-                      style={{
-                        color: "#99999F",
-                        lineHeight: "8px",
-                        marginLeft: "5px",
-                      }}
+                      style={{ color: "#99999F", lineHeight: "8px" }}
                       className={style.browseSubText}
                     >
-                      {cur.likes}
+                      {cur.artist}
                     </Typography>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+          </div>
+          <div className={classes.browse}>
+            <Typography className={style.browseText}>
+              You might like these artists
+            </Typography>
+            <div className={classes.songCategory}>
+              {recommendations.map((cur) => {
+                return (
+                  <div className={classes.recommendationBox}>
+                    <div className={classes.genre}>
+                      <Image
+                        src={cur.image}
+                        width="225px"
+                        height="225px"
+                        alt=""
+                      />
+                    </div>
+                    <Typography variant="body2" className={style.browseSubText}>
+                      {cur.name}
+                    </Typography>
+                    <div className={classes.likeBox}>
+                      <Like />
+                      <Typography
+                        variant="subtitle1"
+                        style={{
+                          color: "#99999F",
+                          lineHeight: "8px",
+                          marginLeft: "5px",
+                        }}
+                        className={style.browseSubText}
+                      >
+                        {cur.likes}
+                      </Typography>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
+      )}
+      {ctx.data && (
+        <div>
+          {ctx.data.items.map((item) => {
+            return (
+              <div className={classes.song}>
+                <div
+                  onClick={() => ctx.setPlayingSong(item.uri)}
+                  className={classes.imageBox}
+                >
+                  <Image
+                    loader={() => item.album.images[1].url}
+                    unoptimized
+                    width={50}
+                    height={50}
+                    src={item.album.images[1].url}
+                    alt=""
+                  />
+                </div>
+                <div className={classes.songInfoBox}>
+                  <Typography>{item.name}</Typography>
+                  <Typography>{item.artists[0].name}</Typography>
+                </div>
+              </div>
+            );
+          })}
+          <div>
+            <Player />
+          </div>
+        </div>
+      )}
     </section>
   );
 };

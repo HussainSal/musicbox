@@ -17,12 +17,11 @@ import Search from "../../assets/icons/Search";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Player from "../Player";
 
-import useAuth from "../../store/useAuth";
-import SpotifyWebApi from "spotify-web-api-node";
-const spotifyApi = new SpotifyWebApi({
-  clientId: "c1af256ebd144ae18d2cdd24146ef6fc",
-});
+const category = ["Generes & Moods", "New Releases", "Podcast"];
+
+const page = ["browse", "library", "home"];
 
 const AUTH_URL =
   "https://accounts.spotify.com/authorize?client_id=c1af256ebd144ae18d2cdd24146ef6fc&response_type=code&redirect_uri=http://localhost:3000&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state";
@@ -59,12 +58,25 @@ const useStyle = makeStyles({
       background: "#161A1A",
     },
   },
+  nonHomebutton: {
+    fontSize: "18px",
+    fontWeight: "bold",
+    color: "#99999F",
+    cursor: "pointer",
+    border: "0px",
+    background: "#161A1A",
+
+    "&:hover": {
+      background: "#161A1A",
+    },
+  },
+
   browseCategoriesText: {
     color: "#FFF",
   },
 });
 
-const Layout = ({ children, code }) => {
+const Layout = ({ children }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -78,24 +90,12 @@ const Layout = ({ children, code }) => {
 
   const ctx = useAppContext();
   const style = useStyle();
-  useEffect(() => {
-    !ctx.login ? "" : router.push("/home");
-  }, [ctx.login]);
-
-  const accessToken = useAuth(code);
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    if (!accessToken) return;
-    spotifyApi.setAccessToken(accessToken);
-  }, [accessToken]);
-
-  useEffect(() => {
-    if (!search) return setSearchResults([]);
-    if (!accessToken) return;
-
-    spotifyApi.searchTracks(search).then((res) => {
+    if (!ctx.accessToken || !ctx.spotifyApiCtx || !search) return;
+    ctx.spotifyApiCtx.searchTracks(search).then((res) => {
       setSearchResults(
         res.body.tracks.items.map((track) => {
           const smallestAlbumImage = track.album.images.reduce(
@@ -115,13 +115,57 @@ const Layout = ({ children, code }) => {
         })
       );
     });
-  }, [search, accessToken]);
+  }, [ctx.accessToken, ctx.spotifyApiCtx, search]);
 
-  console.log(searchResults);
+  console.log(ctx.activeLink);
+
+  // useEffect(() => {
+  //   if (!accessToken) return;
+  //   spotifyApi.setAccessToken(accessToken);
+  // }, [accessToken]);
+
+  // useEffect(() => {
+  //   if (!search) return;
+  //   if (!accessToken) return;
+
+  //   let cancel = false;
+  //   spotifyApi.searchTracks(search).then((res) => {
+  //     // console.log(res.body.tracks);
+  //     ctx.setData(res.body.tracks);
+
+  //     if (cancel) return;
+  //     setSearchResults(
+  //       res.body.tracks.items.map((track) => {
+  //         const smallestAlbumImage = track.album.images.reduce(
+  //           (smallest, image) => {
+  //             if (image.height < smallest.height) return image;
+  //             return smallest;
+  //           },
+  //           track.album.images[0]
+  //         );
+
+  //         return {
+  //           artist: track.artists[0].name,
+  //           title: track.name,
+  //           uri: track.uri,
+  //           albumUrl: smallestAlbumImage.url,
+  //         };
+  //       })
+  //     );
+
+  //     return () => (cancel = true);
+  //   });
+  // }, [search, accessToken]);
+
+  // console.log(searchResults);
+
+  const code = true;
+  const login = false;
+  const signup = false;
 
   return (
     <Fragment>
-      {!ctx.login && !ctx.signup ? (
+      {!ctx.accessToken ? (
         <nav className={classes.navigation}>
           <div className={classes.innernavigation}>
             <div className={classes.logo}>
@@ -138,7 +182,6 @@ const Layout = ({ children, code }) => {
               </div>
               <div className={classes.buttonBox}>
                 <Button
-                  onClick={() => ctx.setLogin(true)}
                   variant="outlined"
                   className={style.loginButton}
                   href={AUTH_URL}
@@ -147,7 +190,6 @@ const Layout = ({ children, code }) => {
                 </Button>
                 <Button
                   disableElevation
-                  onClick={() => ctx.setSignup(true)}
                   variant="contained"
                   className={style.signupButton}
                 >
@@ -159,9 +201,7 @@ const Layout = ({ children, code }) => {
         </nav>
       ) : (
         <nav
-          className={`${classes.navigation} ${
-            !ctx.login && !ctx.signup ? "" : classes.navcolor
-          } `}
+          className={`${classes.navigation} ${code ? "" : classes.navcolor} `}
         >
           <div
             className={`${classes.innernavigation} ${classes.innernavigation_logedin}`}
@@ -170,37 +210,54 @@ const Layout = ({ children, code }) => {
               <div className={classes.logo}>
                 <Image src={logo} width="100px" height="45px" alt="" />
               </div>
-              <Nextlink href={"/browse"}>
-                <Typography className={style.loggedin_navtext} variant="body1">
-                  Browse
-                </Typography>
-              </Nextlink>
-              <Typography className={style.loggedin_navtext} variant="body1">
-                library
-              </Typography>
-              <div className={classes.buttonGradient}>
-                <Nextlink href={"/home"}>
-                  <Button
-                    className={`${style.loginButton} ${style.homebutton} `}
+              {page.map((cur) => {
+                return (
+                  <div
+                    className={`${
+                      ctx.pageButton == cur && classes.buttonGradient
+                    }`}
                   >
-                    Home
-                  </Button>
-                </Nextlink>
-              </div>
+                    <Nextlink href={`/${cur}`}>
+                      <Button
+                        onClick={() => {
+                          ctx.setPageButton(cur);
+                        }}
+                        className={`${style.loginButton} ${
+                          ctx.pageButton == cur
+                            ? style.homebutton
+                            : style.nonHomebutton
+                        } `}
+                      >
+                        {cur}
+                      </Button>
+                    </Nextlink>
+                  </div>
+                );
+              })}
             </div>
             {router.pathname.includes("/browse") && (
               <div className={classes.browseCategories}>
-                <Nextlink href={"/browse"}>
-                  <Typography
-                    variant="body1"
-                    className={`${classes.browseCategoriesText}   ${
-                      router.pathname == "/browse" && style.browseCategoriesText
-                    } `}
-                  >
-                    Generes & Moods
-                  </Typography>
-                </Nextlink>
-                <Nextlink href={"/browse/newreleases"}>
+                {category.map((cur) => {
+                  return (
+                    <div className={classes.categorySong}>
+                      <Typography
+                        onClick={() => {
+                          ctx.setActiveLink(cur);
+                        }}
+                        variant="body1"
+                        className={`${classes.browseCategoriesText} ${
+                          ctx.activeLink == cur && style.browseCategoriesText
+                        }`}
+                      >
+                        {cur}
+                      </Typography>
+                      {ctx.activeLink == cur && (
+                        <div className={classes.activeBorderBottom} />
+                      )}
+                    </div>
+                  );
+                })}
+                {/* <Nextlink href={"/browse/newreleases"}>
                   <Typography
                     variant="body1"
                     className={`${classes.browseCategoriesText} ${
@@ -221,7 +278,7 @@ const Layout = ({ children, code }) => {
                   >
                     Podcast
                   </Typography>
-                </Nextlink>
+                </Nextlink> */}
               </div>
             )}
             <div className={classes.searchBox}>
@@ -261,7 +318,7 @@ const Layout = ({ children, code }) => {
                     <MenuItem
                       onClick={() => {
                         handleClose;
-                        ctx.setLogin(false);
+                        // ctx.setLogin(false);
                       }}
                     >
                       Logout
@@ -273,8 +330,42 @@ const Layout = ({ children, code }) => {
           </div>
         </nav>
       )}
-      <main>{children}</main>
-      {!ctx.signup && !ctx.login && (
+      <main>
+        {search ? (
+          <div className={classes.searchMusic}>
+            {searchResults.map((item) => {
+              console.log(item);
+              return (
+                <div className={classes.song}>
+                  <div
+                    onClick={() => ctx.setPlayingSong(item.uri)}
+                    className={classes.imageBox}
+                  >
+                    <Image
+                      loader={() => item.albumUrl}
+                      unoptimized
+                      width={50}
+                      height={50}
+                      src={item.albumUrl}
+                      alt=""
+                    />
+                  </div>
+                  <div className={classes.songInfoBox}>
+                    <Typography>{item.title}</Typography>
+                    <Typography>{item.artist}</Typography>
+                  </div>
+                </div>
+              );
+            })}
+            <div className={classes.player}>
+              <Player />
+            </div>
+          </div>
+        ) : (
+          children
+        )}
+      </main>
+      {signup && login && (
         <footer className={classes.footer}>
           <div className={classes.innerFotterContainer}>
             <div className={classes.footerOptions_box}>

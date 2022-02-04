@@ -1,10 +1,9 @@
 import React from "react";
-import classes from "../../styles/newreleases.module.css";
+import classes from "../styles/newreleases.module.css";
 import { Typography, makeStyles } from "@material-ui/core";
 import Image from "next/dist/client/image";
-import { newreleases1 } from "../../assets/data/newreleases";
-import { newreleases2 } from "../../assets/data/newreleases";
-import { useAppContext } from "../../store/authContext";
+import { newreleases1 } from "../assets/data/newreleases";
+import { newreleases2 } from "../assets/data/newreleases";
 
 const useStyle = makeStyles({
   browseText: {
@@ -19,9 +18,8 @@ const useStyle = makeStyles({
   },
 });
 
-const newreleases = () => {
+const Newreleases = () => {
   const style = useStyle();
-  const ctx = useAppContext();
 
   return (
     <section className={classes.newreleaseSection}>
@@ -88,4 +86,4 @@ const newreleases = () => {
   );
 };
 
-export default newreleases;
+export default Newreleases;

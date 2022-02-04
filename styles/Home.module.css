@@ -28,6 +28,7 @@
 
 .genre {
   cursor: pointer;
+  /* position: relative; */
 }
 
 .recommendationBox {
@@ -41,4 +42,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.songInfoBox {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
+.imageBox {
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.song {
+  margin: 15px 0px;
+  display: flex;
 }

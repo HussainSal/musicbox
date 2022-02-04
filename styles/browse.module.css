@@ -19,4 +19,29 @@
 
 .genre {
   cursor: pointer;
+  position: relative;
+}
+
+.categoryName {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.imageBox {
+  width: 225px;
+  height: 128px;
+  position: relative;
+}
+
+.overlay {
+  background-image: linear-gradient(to right bottom, #e92d6b98 10%, #3b8c99c4);
+  width: 225px;
+  height: 128px;
+  position: absolute;
+  z-index: 100;
+  top: 0%;
+  left: 0%;
 }

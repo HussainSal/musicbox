@@ -1,10 +1,10 @@
 import React from "react";
-import classes from "../../styles/newreleases.module.css";
-import { Typography, makeStyles } from "@material-ui/core";
+import classes from "../styles/podcast.module.css";
+import { makeStyles, Typography } from "@material-ui/core";
 import Image from "next/dist/client/image";
-import { newreleases1 } from "../../assets/data/newreleases";
-import { newreleases2 } from "../../assets/data/newreleases";
-import { useAppContext } from "../../store/authContext";
+import { podcastShows1 } from "../assets/data/podcast";
+import { podcastShows2 } from "../assets/data/podcast";
+import { podcastCategory } from "../assets/data/podcast";
 
 const useStyle = makeStyles({
   browseText: {
@@ -19,19 +19,18 @@ const useStyle = makeStyles({
   },
 });
 
-const newreleases = () => {
+const Podcast = () => {
   const style = useStyle();
-  const ctx = useAppContext();
 
   return (
-    <section className={classes.newreleaseSection}>
-      <div className={classes.newreleaseContainer}>
-        <div className={classes.newreleasedContainer}>
+    <section className={classes.podcastSection}>
+      <div className={classes.podcastContainer}>
+        <div className={classes.podcast}>
           <Typography className={style.browseText}>
             Popular this week
           </Typography>
           <div className={classes.songCategory}>
-            {newreleases1.map((cur) => {
+            {podcastShows1.map((cur) => {
               return (
                 <div>
                   <div className={classes.genre}>
@@ -57,7 +56,7 @@ const newreleases = () => {
             })}
           </div>
           <div className={classes.songCategory}>
-            {newreleases2.map((cur) => {
+            {podcastShows2.map((cur) => {
               return (
                 <div>
                   <div className={classes.genre}>
@@ -83,9 +82,22 @@ const newreleases = () => {
             })}
           </div>
         </div>
+
+        <Typography className={style.browseText}>Categories</Typography>
+        <div className={classes.songCategory}>
+          {podcastCategory.map((cur) => {
+            return (
+              <div>
+                <div className={classes.genre}>
+                  <Image src={cur.image} width="225px" height="128px" alt="" />
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 };
 
-export default newreleases;
+export default Podcast;

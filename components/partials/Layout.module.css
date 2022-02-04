@@ -3,6 +3,7 @@
   backdrop-filter: blur(30px);
   width: 100%;
   z-index: 100;
+  top: 0;
   /* background-color: black; */
 }
 
@@ -107,8 +108,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 420px;
+  width: 480px;
   height: 36px;
+}
+
+.logo {
+  margin-right: 25px;
 }
 
 .innernavigation_logedin {
@@ -148,6 +153,7 @@
   font-weight: normal;
   cursor: pointer;
   color: #99999f;
+  padding-bottom: 12px;
 }
 
 .input {
@@ -191,4 +197,45 @@
 
 .loginButtonBox {
   padding: 100px;
+}
+
+/*SONGS LIST */
+
+/* .songBox {
+  max-width: 1440px;
+  display: flex;
+  margin: auto;
+} */
+
+.songInfoBox {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
+.imageBox {
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.searchMusic {
+  margin-top: 90px;
+}
+
+.song {
+  margin: 15px 15px 0px 30px;
+  display: flex;
+}
+
+.categorySong {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.activeBorderBottom {
+  width: 67px;
+  height: 3px;
+  background: linear-gradient(to right, #35edfb -8%, #2d9bef 60%, #9b2def 105%);
 }
