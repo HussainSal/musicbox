@@ -239,3 +239,9 @@
   height: 3px;
   background: linear-gradient(to right, #35edfb -8%, #2d9bef 60%, #9b2def 105%);
 }
+
+.categoryBox {
+  display: flex;
+  position: relative;
+  right: 22%;
+}

@@ -10,6 +10,7 @@ import { useAppContext } from "../../store/authContext";
 import Newreleases from "../../components/Newreleases";
 import Podcast from "../../components/Podcast";
 import { Grid } from "@mui/material";
+import Nextlink from "next/link";
 
 const useStyle = makeStyles({
   browseText: {
@@ -28,37 +29,37 @@ const index = () => {
   useEffect(() => {
     if (!ctx.accessToken || !ctx.spotifyApiCtx) return;
     ctx.spotifyApiCtx.getCategories({ limit: 30 }).then((res) => {
-      // console.log(res.body.categories.items);
       setSongCategory(res.body.categories.items);
     });
   }, [ctx.accessToken, ctx.spotifyApiCtx]);
 
-  console.log(songCategory);
   return ctx.activeLink == "Generes & Moods" ? (
     <section className={classes.browseSection}>
       <div className={classes.browseContainer}>
         <div className={classes.browse}>
           <Typography className={style.browseText}>Browse</Typography>
-          {/* className={classes.songCategory} */}
           <Grid container rowGap="26px" columnGap="26px">
             {songCategory &&
               songCategory.map((cur) => {
                 return (
-                  <Grid item className={classes.genre}>
-                    <div className={classes.imageBox}>
-                      <div className={classes.overlay} />
-                      <Image
-                        loader={() => cur.icons[0].url}
-                        src={cur.icons[0].url}
-                        width="225px"
-                        height="128px"
-                        alt=""
-                      />
-                    </div>
-                    <Typography className={classes.categoryName}>
-                      {cur.name}
-                    </Typography>
-                  </Grid>
+                  <Nextlink href={`/browse/genre?category=${cur.id}`}>
+                    <Grid item className={classes.genre}>
+                      <div className={classes.imageBox}>
+                        <div className={classes.overlay} />
+                        <Image
+                          loader={() => cur.icons[0].url}
+                          unoptimized
+                          src={cur.icons[0].url}
+                          width="225px"
+                          height="128px"
+                          alt=""
+                        />
+                      </div>
+                      <Typography className={classes.categoryName}>
+                        {cur.name}
+                      </Typography>
+                    </Grid>
+                  </Nextlink>
                 );
               })}
           </Grid>

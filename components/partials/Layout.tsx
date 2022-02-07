@@ -235,7 +235,18 @@ const Layout = ({ children }) => {
                 );
               })}
             </div>
-            {router.pathname.includes("/browse") && (
+            {router.query.category && (
+              <div className={classes.categoryBox}>
+                <Typography color="secondary">Generes /</Typography>
+                <Typography
+                  color="primary"
+                  style={{ textTransform: "uppercase", marginLeft: "2px" }}
+                >
+                  {router.query.category}
+                </Typography>
+              </div>
+            )}
+            {router.pathname == "/browse" && (
               <div className={classes.browseCategories}>
                 {category.map((cur) => {
                   return (
